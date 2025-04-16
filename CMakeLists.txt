@@ -63,12 +63,14 @@ endif()
 
 
 add_executable(${PROJECT_NAME}
-  Discordia/Source/main.cpp
+  Discordia/main.cpp
+  Discordia/discordia_api.cpp
+  Discordia/lua_functions.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-  Discordia/Headers
-
+  Discordia
+  
   # Discord
   ${DISCORD_INCLUDE}
   
