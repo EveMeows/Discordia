@@ -25,6 +25,6 @@ mkdir -pv $HOME/.config/systemd/user
 cp -v ../discordia.service $HOME/.config/systemd/user/discordia.service
 
 sudo mkdir -pv /usr/local/bin
-sudo cp -v ./Discordia /usr/local/bin
+sudo cp -v ./Discordia /usr/local/bin/discordia
 
 cd ..
