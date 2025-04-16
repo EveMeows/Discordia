@@ -4,6 +4,9 @@
 #include <filesystem>
 #include <iostream>
 #include <lua.hpp>
+#include <thread>
+
+using namespace std::chrono_literals;
 
 int main()
 {
@@ -44,6 +47,12 @@ int main()
 
   // Construct the RPC daemon.
   api->construct_rpc();
+
+  while (true)
+  {
+    api->update_rpc();
+    std::this_thread::sleep_for(1000ms);
+  }
   
   // Clean up the lua state
   lua_close(lua);
