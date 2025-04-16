@@ -19,6 +19,22 @@ void Discordia::DiscordiaApi::id(const char* id)
   this->m_appid = id;
 }
 
+void Discordia::DiscordiaApi::small_image(const char* key, const char* text)
+{
+  this->m_small.text = text;
+  this->m_small.key = key;
+
+  this->m_small.init = true;
+}
+
+void Discordia::DiscordiaApi::large_image(const char* key, const char* text)
+{
+  this->m_big.text = text;
+  this->m_big.key = key;
+
+  this->m_big.init = true;
+}
+
 void Discordia::DiscordiaApi::construct_rpc()
 {
   if (!this->m_appid)

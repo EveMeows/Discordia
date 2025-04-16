@@ -10,4 +10,9 @@ namespace Discordia::Lua
   int l_gcmm(lua_State* lua);
   
   int l_id(lua_State* lua);
+
+  int l_simg(lua_State* lua);
+  int l_bimg(lua_State* lua);
+
+  int l_tstamp(lua_State* lua);
 }

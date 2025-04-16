@@ -18,6 +18,7 @@ namespace Discordia
     struct TimeStamp
     {
       bool init = false;
+
       int64_t start;
       int64_t end;
     };
