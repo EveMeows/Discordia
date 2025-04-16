@@ -66,6 +66,8 @@ add_executable(${PROJECT_NAME}
   Discordia/main.cpp
   Discordia/discordia_api.cpp
   Discordia/lua_functions.cpp
+
+  Discordia/util.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

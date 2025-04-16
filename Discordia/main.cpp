@@ -1,5 +1,8 @@
 #include "discordia_api.h"
 #include "lua_functions.h"
+#include "util.h"
+#include <filesystem>
+#include <iostream>
 #include <lua.hpp>
 
 int main()
@@ -16,9 +19,30 @@ int main()
 
   Discordia::Lua::l_createmm(lua);
 
-  // TODO: Config file
+  // Config file search
+  std::filesystem::path config_root = Discordia::Util::config_home();
+  if (!std::filesystem::exists(config_root))
+  {
+    std::cerr << "ERROR: The configuration folder " << config_root << " does not exist. Please create it and retry." << std::endl;
+    return -1;
+  }
+  
+  std::cout << "INFO: Using configuration folder " << config_root << "." << std::endl;
 
-  luaL_dostring(lua, "Discordia:id()");
+  std::filesystem::path config_file = config_root / "discordia" / "config.lua";
+  if (!std::filesystem::exists(config_file))
+  {
+    std::cerr << "ERROR: The configuration file " << config_file << " does not exist. Please create it and try again." << std::endl;
+    return -1;
+  }
+
+  std::cout << "INFO: Using configuration file " << config_file << "." << std::endl;
+
+  // Run lua script.
+  std::string string_config = config_file.string();
+  luaL_dofile(lua, string_config.c_str());
+
+  // Construct the RPC daemon.
   api->construct_rpc();
   
   // Clean up the lua state
