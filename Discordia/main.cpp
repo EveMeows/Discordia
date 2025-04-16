@@ -43,7 +43,19 @@ int main()
 
   // Run lua script.
   std::string string_config = config_file.string();
-  luaL_dofile(lua, string_config.c_str());
+  int status = luaL_dofile(lua, string_config.c_str());
+  if (status != LUA_OK)
+  {
+    std::cerr << "ERROR: Failed to load Lua script: " << lua_tostring(lua, -1) << std::endl;
+    lua_pop(lua, 1);
+  }
+
+  status = lua_pcall(lua, 0, 0, 0);
+  if (status != LUA_OK)
+  {
+    std::cerr << "ERROR: Failed to execute Lua script: " << lua_tostring(lua, -1) << std::endl;
+    lua_pop(lua, 1);
+  }
 
   // Construct the RPC daemon.
   api->construct_rpc();

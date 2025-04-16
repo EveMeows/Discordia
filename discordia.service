@@ -1,0 +1,10 @@
+[Unit]
+Description=Discord RPC client configured with lua!
+
+[Service]
+Type=simple
+StandardOutput=journal
+ExecStart=discordia
+
+[Install]
+WantedBy=default.target

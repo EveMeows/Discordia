@@ -43,6 +43,16 @@ void Discordia::DiscordiaApi::details(const char* details, const char* state)
   this->m_text.init = true;
 }
 
+void Discordia::DiscordiaApi::start_time(int64_t start)
+{
+  this->m_start = start;
+}
+
+void Discordia::DiscordiaApi::end_time(int64_t end)
+{
+  this->m_end = end;
+}
+
 void Discordia::DiscordiaApi::construct_rpc()
 {
   if (!this->m_appid)
@@ -69,6 +79,16 @@ void Discordia::DiscordiaApi::construct_rpc()
   {
     this->m_presence.details = this->m_text.details;
     this->m_presence.state = this->m_text.state;
+  }
+
+  if (this->m_start != -1)
+  {
+    this->m_presence.startTimestamp = this->m_start;
+  }
+
+  if (this->m_end != -1)
+  {
+    this->m_presence.endTimestamp = this->m_end;
   }
 
   DiscordEventHandlers handlers = {

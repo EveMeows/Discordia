@@ -14,15 +14,7 @@ namespace Discordia
       const char* key;
       const char* text;
     };
-
-    struct TimeStamp
-    {
-      bool init = false;
-
-      int64_t start;
-      int64_t end;
-    };
-
+    
     struct Text
     {
       bool init = false;
@@ -47,9 +39,13 @@ namespace Discordia
     /// @note The key can also be a URL.
     void small_image(const char* key, const char* text);
 
-    /// @brief Set the start and end time dates.
-    /// @note The time MUST be in UNIX TimeStamps.
-    void timestamps(int64_t start, int64_t end);
+    /// @brief Set the start date.
+    /// @note Leave empty if start is now. The time MUST be in UNIX TimeStamp.
+    void start_time(int64_t start);
+
+    /// @brief Set the end date.
+    /// @note The time MUST be in UNIX TimeStamp.
+    void end_time(int64_t end);
 
     /// @brief Set the details and state of the RPC.
     /// @note Details is above, State is below.
@@ -68,6 +64,9 @@ namespace Discordia
     Internal::Image m_small;
     Internal::Image m_big;
     Internal::Text m_text;
+
+    int64_t m_start = -1;
+    int64_t m_end = -1;
 
     DiscordRichPresence m_presence;
   };

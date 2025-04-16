@@ -1,5 +1,6 @@
 #include "lua_functions.h"
 #include "discordia_api.h"
+#include <iostream>
 
 int Discordia::Lua::l_id(lua_State* lua)
 {
@@ -40,8 +41,21 @@ int Discordia::Lua::l_simg(lua_State* lua)
   return 0;
 }
 
-int Discordia::Lua::l_tstamp(lua_State *lua)
+int Discordia::Lua::l_tstart(lua_State *lua)
 {
+  DiscordiaApi* self = *reinterpret_cast<DiscordiaApi**>(luaL_checkudata(lua, 1, Discordia::Lua::discordia_mm));
+  int64_t start = static_cast<int64_t>(luaL_checkinteger(lua, 2));
+
+  self->start_time(start);
+  return 0;
+}
+
+int Discordia::Lua::l_tend(lua_State *lua)
+{
+  DiscordiaApi* self = *reinterpret_cast<DiscordiaApi**>(luaL_checkudata(lua, 1, Discordia::Lua::discordia_mm));
+  int end = lua_tonumber(lua, 2);
+
+  self->end_time(end);
   return 0;
 }
 
@@ -66,6 +80,12 @@ void Discordia::Lua::l_createmm(lua_State* lua)
     
     lua_pushcfunction(lua, Discordia::Lua::l_bimg);
     lua_setfield(lua, -2, "large_image");
+
+    lua_pushcfunction(lua, Discordia::Lua::l_tstart);
+    lua_setfield(lua, -2, "start_time");
+    
+    lua_pushcfunction(lua, Discordia::Lua::l_tend);
+    lua_setfield(lua, -2, "end_time");
     
     // Set index
     lua_pushvalue(lua, -1);
