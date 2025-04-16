@@ -11,6 +11,8 @@ namespace Discordia::Lua
   
   int l_id(lua_State* lua);
 
+  int l_txt(lua_State* lua);
+
   int l_simg(lua_State* lua);
   int l_bimg(lua_State* lua);
 

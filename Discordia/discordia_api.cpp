@@ -35,6 +35,14 @@ void Discordia::DiscordiaApi::large_image(const char* key, const char* text)
   this->m_big.init = true;
 }
 
+void Discordia::DiscordiaApi::details(const char* details, const char* state)
+{
+  this->m_text.details = details;
+  this->m_text.state = state;
+  
+  this->m_text.init = true;
+}
+
 void Discordia::DiscordiaApi::construct_rpc()
 {
   if (!this->m_appid)
@@ -43,10 +51,7 @@ void Discordia::DiscordiaApi::construct_rpc()
     exit(1);
   }
 
-  this->m_presence = DiscordRichPresence {
-    .state = "Testing test",
-    .details = "More testing test"
-  };
+  this->m_presence = DiscordRichPresence {};
 
   if (this->m_small.init)
   {
@@ -58,6 +63,12 @@ void Discordia::DiscordiaApi::construct_rpc()
   {
     this->m_presence.largeImageKey = this->m_big.key;
     this->m_presence.largeImageText = this->m_big.text;
+  }
+
+  if (this->m_text.init)
+  {
+    this->m_presence.details = this->m_text.details;
+    this->m_presence.state = this->m_text.state;
   }
 
   DiscordEventHandlers handlers = {

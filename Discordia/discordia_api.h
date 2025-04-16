@@ -22,6 +22,14 @@ namespace Discordia
       int64_t start;
       int64_t end;
     };
+
+    struct Text
+    {
+      bool init = false;
+
+      const char* details;
+      const char* state;
+    };
   }
   
   class DiscordiaApi
@@ -43,6 +51,12 @@ namespace Discordia
     /// @note The time MUST be in UNIX TimeStamps.
     void timestamps(int64_t start, int64_t end);
 
+    /// @brief Set the details and state of the RPC.
+    /// @note Details is above, State is below.
+    void details(const char* details, const char* state);
+
+
+
     // INTERNAL API
     // ---------------------
     void construct_rpc();
@@ -53,6 +67,7 @@ namespace Discordia
 
     Internal::Image m_small;
     Internal::Image m_big;
+    Internal::Text m_text;
 
     DiscordRichPresence m_presence;
   };

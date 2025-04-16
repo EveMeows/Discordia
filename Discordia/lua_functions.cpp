@@ -10,6 +10,16 @@ int Discordia::Lua::l_id(lua_State* lua)
   return 0;
 }
 
+int Discordia::Lua::l_txt(lua_State *lua)
+{
+  DiscordiaApi* self = *reinterpret_cast<DiscordiaApi**>(luaL_checkudata(lua, 1, Discordia::Lua::discordia_mm));
+  const char* details = luaL_checkstring(lua, 2);
+  const char* state = luaL_checkstring(lua, 3);
+
+  self->details(details, state);
+  return 0;
+}
+
 int Discordia::Lua::l_bimg(lua_State *lua)
 {
   DiscordiaApi* self = *reinterpret_cast<DiscordiaApi**>(luaL_checkudata(lua, 1, Discordia::Lua::discordia_mm));
@@ -47,6 +57,9 @@ void Discordia::Lua::l_createmm(lua_State* lua)
   {
     lua_pushcfunction(lua, Discordia::Lua::l_id);
     lua_setfield(lua, -2, "id");
+
+    lua_pushcfunction(lua, Discordia::Lua::l_txt);
+    lua_setfield(lua, -2, "details");
 
     lua_pushcfunction(lua, Discordia::Lua::l_simg);
     lua_setfield(lua, -2, "small_image");
