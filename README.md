@@ -69,10 +69,11 @@ chmod +x ./install.sh
 ./install.sh
 ```
 
+This will use the boundled libraries, You can compile the project yourself with custom LUA and DiscordRPC paths by running the following command:
+
 > [!NOTE]
 > The the root paths are supposed to lead to the `discord` and `lua` directories as shown below.
 
-This will use the boundled libraries, You can compile the project yourself with custom LUA and DiscordRPC paths by running the following command:
 ```bash
 mkdir build && cd build
 
