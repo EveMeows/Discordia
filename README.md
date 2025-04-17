@@ -11,6 +11,15 @@ systemctl --user start discordia
 
 # Restart the service (incase you changed the config)
 systemctl --user restart discordia
+
+# Stop the service
+systemctl --user stop discordia
+
+# Enable the service (it will always start at bootup (not recommended))
+systemctl --user enable discordia
+
+# Disable the service (it can no longer be started)
+systemctl --user disable discordia
 ```
 
 The configuration file should be placed in `$HOME/.config/discordia/config.lua` for default, or if `XDG_CONFIG_HOME` is set, it will be found inside `$XDG_CONFIG_HOME/discordia/config.lua`.
@@ -60,12 +69,35 @@ chmod +x ./install.sh
 ./install.sh
 ```
 
+> [!NOTE]
+> The the root paths are supposed to lead to the `discord` and `lua` directories as shown below.
+
 This will use the boundled libraries, You can compile the project yourself with custom LUA and DiscordRPC paths by running the following command:
 ```bash
 mkdir build && cd build
 
 cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Release -DLUA_ROOT=/path/to/lua -DDISCORD_ROOT=/path/to/discord
 ninja
+```
+
+The paths should look like this:
+```bash
+Parent
+├── discord
+│   ├── include
+│   │   ├── discord_register.h
+│   │   └── discord_rpc.h
+│   └── lib
+│       └── libdiscord-rpc.a
+└── lua
+    ├── include
+    │   ├── lauxlib.h
+    │   ├── luaconf.h
+    │   ├── lua.h
+    │   ├── lua.hpp
+    │   └── lualib.h
+    └── lib
+        └── liblua.a
 ```
 
 # LICENSE
