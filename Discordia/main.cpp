@@ -1,12 +1,28 @@
+#include "discord_rpc.h"
 #include "discordia_api.h"
 #include "lua_functions.h"
 #include "util.h"
+#include <csignal>
 #include <filesystem>
+#include <functional>
 #include <iostream>
 #include <lua.hpp>
 #include <thread>
 
+// Idk how else I'm supposed to get `1000ms`
 using namespace std::chrono_literals;
+
+namespace {
+  // Gracefully handle shutdown
+  static std::function<void()> sigint;
+  static void shutdown(int sig)
+  {
+    if (sig != SIGINT) return;
+    
+    if (sigint) sigint();
+    exit(0);
+  }
+}
 
 int main()
 {
@@ -60,12 +76,22 @@ int main()
   // Construct the RPC daemon.
   api->construct_rpc();
 
+  // Create exit handler
+  sigint = [&lua]() {
+    std::cout << "INFO: Service is shutting down." << std::endl;
+    
+    lua_close(lua);
+    std::cout << "INFO: Lua state killed." << std::endl;
+    
+    Discord_Shutdown();
+    std::cout << "INFO: Discord service stopped." << std::endl;
+  };
+  
+  std::signal(SIGINT, shutdown);
+
   while (true)
   {
     api->update_rpc();
     std::this_thread::sleep_for(1000ms);
   }
-  
-  // Clean up the lua state
-  lua_close(lua);
 }

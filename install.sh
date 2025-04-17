@@ -16,6 +16,9 @@ case $RESPONSE in
   ;;
 esac
 
+# Scary !
+rm -rfv ./build
+
 mkdir build && cd build
 
 cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Release
